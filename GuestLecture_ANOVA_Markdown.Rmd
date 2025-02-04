@@ -184,7 +184,7 @@ education %>%
 
 ## 17. Categorical + Continuous Variables (Violin Plot)
 
-```{r, boxplot}
+```{r, violinplot}
 education %>%
   ggplot(mapping = aes(x = WklyStudyHours, y = MathScore)) + 
   geom_violin(fill = 'grey') + 
