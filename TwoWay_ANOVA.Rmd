@@ -1,0 +1,124 @@
+---
+title: "Two Way ANOVA"
+author: "Jessica Macaluso"
+date: "2025-03-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load in packages
+
+```{r, load packages}
+library(tidyverse)
+library(DescTools)
+library(effectsize)
+library(emmeans)
+library(car)
+library(reghelper)
+```
+## Disable scientific notation
+
+```{r, disable scientific notation}
+options(scipen = 999) 
+```
+
+
+## VARIABLES & STUDY PREMISE
+- 120 participants, 40/group, between-subjects design
+- DV - performance on final retrieval quiz
+- VariableA (IV/PV) - level of trained expertise (categorical, binomial)
+  - A1 - Novice (lower mean)
+  - A2 - Expert (higher mean)
+- VariableB (IV/PV) - study strategy intervention (categorical, binomial)
+  - B1 - Restudy Intervention (lower mean)
+  - B2 - Retrieval Intervention (higher mean)
+
+## Read in the data
+```{r, data1}
+final <- read.csv("finalexam-2way.csv")
+head (final)
+```
+
+Treat as factors:
+
+```{r, data2}
+final <- read.csv('finalexam-2way.csv', stringsAsFactors = TRUE)
+head(final)
+```
+
+## One-way ANOVA VariableA
+
+```{r, model_a}
+model_a <- lm(DV~ 1 + VariableA, data=final)
+anova(model_a)
+```
+
+No, there is not significant difference between groups. Same performance regardless of assigned expertise.
+
+## One-way ANOVA VariableB
+
+```{r, model_b}
+model_b <- lm(DV~ 1 + VariableB, data=final)
+anova(model_b)
+```
+
+Yes, there is a significant difference between groups. Different performance regarding study strategy intervention.
+
+```{r, model_1}
+model_1 <- lm(DV ~ VariableA*VariableB , data=final)
+summary(model_1)
+```
+
+## Visualizing the data
+
+```{r, graph}
+final %>% group_by(VariableA, VariableB) %>% 
+  summarize(DV_M=mean(DV)) %>%
+  ggplot(aes(x=VariableB, y=DV_M, color=VariableA, group=VariableA)) +   
+  geom_point() + geom_line()
+```
+
+Performance on final quiz (z-scores): A2B2 best (Expert, Retrieval); A1B2 second (Novice, Retrieval); A1B1 third (Novice, Restudy); A2B1 last (Expert, Restudy).
+
+## Contrasts
+
+```{r, contrasts1}
+contrasts(final$VariableA)
+```
+
+```{r, contrasts2}
+contrasts(final$VariableA) <- cbind(c(.5, -.5))
+colnames(contrasts(final$VariableA)) <- c('Restudy versus Retrieval on Expertise')
+contrasts(final$VariableA)
+```
+
+```{r, model_x}
+model_x <- lm(DV~ 1 + VariableA, data=final)
+summary(model_x)
+```
+
+```{r, contrasts3}
+contrasts(final$VariableB)
+```
+
+```{r, contrasts4}
+contrasts(final$VariableB) <- cbind(c(.5, -.5))
+colnames(contrasts(final$VariableB)) <- c('Novice versus Expert on Study Strategy')
+contrasts(final$VariableB)
+```
+
+```{r, model_y}
+model_y <- lm(DV~ 1 + VariableB, data=final)
+summary(model_y)
+```
+
+## Tukey Test
+
+```{r, tukey}
+TukeyHSD(aov(model_1))
+```
+
+
