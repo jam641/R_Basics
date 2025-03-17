@@ -1,0 +1,179 @@
+---
+title: "R Basics"
+author: "Jessica Macaluso"
+date: "2025-03-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load Packages
+
+```{r cars}
+library(psych)
+library(tidyverse)
+library(nycflights13)
+```
+
+## Look at Data
+
+```{r data1}
+glimpse(flights)
+```
+
+Let's look at the first six rows of the data.
+
+```{r data2}
+head(flights)
+```
+
+Let's look at the first twenty rows of the data.
+
+```{r data3}
+head(flights, 20)
+```
+
+Let's look at the different variable types (aka the"kind" of variable: character, factor, numeric, integer, etc.).
+
+```{r class}
+class(flights) 
+```
+
+## Using `filter()`
+
+`select()` all variables except carrier THEN `filter()` to only include observations whose destination is ORD.
+
+```{r filter1}
+flights %>%
+  select(-carrier) %>%
+  filter(dest == "ORD")
+```
+
+`filter()` all flights on January 1st.
+
+```{r filter2}
+flights %>% filter(month == 1, day == 1) 
+```
+
+`filter()` all flights on January 1st and save into a new data frame.
+
+```{r filter3}
+jan1 <- flights %>% filter(month == 1, day == 1)
+```
+
+`filter()` all flights on December 25th, save into a new data frame, and `print()`.
+
+```{r filter4}
+(dec25 <- flights %>% filter(month == 12, day == 25))
+```
+
+`filter()` all flights on December 25th, save into a new data frame, and `print()`.
+
+```{r filter5}
+(dec25 <- flights %>% filter(month == 12, day == 25))
+```
+ 
+`filter()` all flights in either November or December.
+
+```{r filter6}
+flights %>% filter(month == 11 | month == 12)
+```
+
+`filter()` all flights not delayed by two or more hours.
+
+```{r filter7}
+flights %>% filter(!(arr_delay > 120 | dep_delay > 120))
+```
+
+`filter()` all flights that departed in summer (July, August, and September).
+
+```{r filter8}
+flights %>% filter(month >= 7 & month <= 9)
+```
+
+`filter()` all flights that flew to Houston (IAH or HOU).
+
+```{r filter9}
+flights %>% filter((dest == 'IAH' | dest == 'HOU')) 
+```
+
+## Using `arrange()`
+
+`arrange()` flights by descending order.
+
+```{r arrange}
+flights %>% arrange(desc(dep_delay)) 
+```
+
+## Using `select()`
+
+`select()` year, month, and day.
+
+```{r select1}
+flights %>% select(year, month, day)
+```
+
+`select()` select all columns between year and day (inclusive).
+
+```{r select2}
+flights %>% select(year:day)
+```
+
+`select()` select all columns except those from year to day (inclusive).
+
+```{r select3}
+flights %>% select(year:day)
+```
+ 
+## Using `summarise()`
+
+`summarise()` by removing NAs prior to computation.
+
+```{r summarise}
+flights %>% summarise(delay = mean(dep_delay, na.rm = TRUE))
+``` 
+ 
+## Using `mutate()`
+
+Use `mutate()` to create new variables.
+
+```{r mutate1}
+flights %>% mutate(gain = dep_delay - arr_delay, hours = air_time / 60, 
+         gain_per_hour = gain / hours)
+``` 
+ 
+```{r mutate2}
+flights %>%
+  mutate(gain = dep_delay - arr_delay, 
+         hours = air_time / 60, 
+         gain_per_hour = gain / hours, 
+         fast_plane = ifelse(gain_per_hour > 1, 1, 0))
+``` 
+
+## Descriptive Statistics
+This is an introduction to `dplyr` for Faster Data Manipulation in R. There are five basic verbs: `filter()`, `select()`, `arrange()`, `summarise()` (plus `group_by()`), and`mutate()`
+- Pick observations by their values (`filter()`); 
+- Reorder the rows (`arrange()`);
+- Pick variables by their names (`select()`);
+- Create new variables with functions of existing variables (`mutate()`);
+- Collapse many values down to a single summary (`summarise()`)
+
+These can all be used in conjunction with `group_by()` which changes the scope of each function from operating on the entire dataset to operating on it group-by-group.
+
+```{r describe}
+describe(flights$dep_time)
+``` 
+
+```{r mean}
+mean(flights$dep_time, na.rm = TRUE)
+``` 
+
+```{r median}
+median(flights$dep_time, na.rm = TRUE)
+``` 
+
+```{r standard_deviation}
+sd(flights$dep_time, na.rm = TRUE)
+``` 
