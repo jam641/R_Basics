@@ -1,0 +1,51 @@
+﻿ID,Initials,Eighteen_or_Older,Fluent_in_English,CogPsych_Student,Age,Gender,Race_Ethnicity,Academic_Year,Psych_Major
+P01,CW,Yes,Yes,Yes,19,Female,White/Caucasian,Sophomore,Yes
+P02,IT,Yes,Yes,Yes,20,Female,White/Caucasian,Sophomore,Yes
+P03,EL,Yes,Yes,Yes,20,Female,White/Caucasian,Junior,No
+P04,SH,Yes,Yes,Yes,19,Female,White/Caucasian,Sophomore,Yes
+P05,MD,Yes,Yes,Yes,21,Female,White/Caucasian,Senior,Yes
+P06,JH,Yes,Yes,Yes,19,Male,White/Caucasian,Sophomore,No
+P07,GH,Yes,Yes,Yes,19,Male,White/Caucasian,Sophomore,Yes
+P08,NC,Yes,Yes,Yes,20,Male,Hispanic/Latino,Junior,Yes
+P09,JG,Yes,Yes,Yes,19,Female,White/Caucasian,Sophomore,Yes
+P10,SR,Yes,Yes,Yes,21,Female,White/Caucasian,Senior,Yes
+P11,PP,Yes,Yes,Yes,22,Female,Black/African American,Senior,No
+P12,DT,Yes,Yes,Yes,21,Male,Asian,Junior,Yes
+P13,RO,Yes,Yes,Yes,20,Female,Asian,Junior,Yes
+P14,RC,Yes,Yes,Yes,20,Male,White/Caucasian,Sophomore,Yes
+P15,CH,Yes,Yes,Yes,20,Female,White/Caucasian,Sophomore,Yes
+P16,RA,Yes,Yes,Yes,21,Female,White/Caucasian,Senior,Yes
+P17,AZ,Yes,Yes,Yes,19,Female,Asian,Sophomore,Yes
+P18,VP,Yes,Yes,Yes,19,Female,Black/African American,Sophomore,Yes
+P19,NP,Yes,Yes,Yes,19,Non-binary,White/Caucasian,Sophomore,No
+P20,EP,Yes,Yes,Yes,20,Female,Asian,Junior,Yes
+P21,SG,Yes,Yes,Yes,19,Female,White/Caucasian,Sophomore,Yes
+P22,DJ,Yes,Yes,Yes,19,Female,White/Caucasian,Sophomore,Yes
+P23,EB,Yes,Yes,Yes,19,Female,Black/African American,Sophomore,Yes
+P24,HK,Yes,Yes,Yes,20,Male,White/Caucasian,Junior,Yes
+P25,SW,Yes,Yes,Yes,20,Male,White/Caucasian,Sophomore,Yes
+P26,JE,Yes,Yes,Yes,19,Male,Asian,Sophomore,No
+P27,RL,Yes,Yes,Yes,19,Female,Black/African American,Sophomore,No
+P28,AS,Yes,Yes,Yes,20,Female,White/Caucasian,Junior,No
+P29,YC,Yes,Yes,Yes,21,Female,Pacific Islander,Junior,Yes
+P30,RZ,Yes,Yes,Yes,20,Female,White/Caucasian,Junior,Yes
+P31,AA,Yes,Yes,Yes,20,Female,Asian,Junior,Yes
+P32,JP,Yes,Yes,Yes,20,Female,Pacific Islander,Junior,Yes
+P33,HM,Yes,Yes,Yes,21,Non-binary,White/Caucasian,Senior,Yes
+P34,LM,Yes,Yes,Yes,19,Transgender,White/Caucasian,Sophomore,Yes
+P35,HS,Yes,Yes,Yes,20,Non-binary,Asian,Junior,Yes
+P36,HB,Yes,Yes,Yes,21,Male,Asian,Junior,No
+P37,DA,Yes,Yes,Yes,20,Female,Pacific Islander,Junior,Yes
+P38,JS,Yes,Yes,Yes,20,Male,Asian,Junior,Yes
+P39,AD,Yes,Yes,Yes,22,Female,Asian,Senior,Yes
+P40,EW,Yes,Yes,Yes,21,Female,Asian,Senior,Yes
+P41,DB,Yes,Yes,Yes,21,Female,White/Caucasian,Senior,Yes
+P42,JF,Yes,Yes,Yes,21,Female,White/Caucasian,Senior,No
+P43,AF,Yes,Yes,Yes,20,Male,White/Caucasian,Junior,Yes
+P44,IF,Yes,Yes,Yes,19,Female,White/Caucasian,Sophomore,No
+P45,AR,Yes,Yes,Yes,19,Male,Asian,Sophomore,Yes
+P46,EC,Yes,Yes,Yes,20,Transgender,White/Caucasian,Junior,Yes
+P47,DC,Yes,Yes,Yes,19,Male,White/Caucasian,Sophomore,Yes
+P48,JX,Yes,Yes,Yes,20,Female,Black/African American,Junior,No
+P49,AR,Yes,Yes,Yes,21,Female,White/Caucasian,Senior,Yes
+P50,RL,Yes,Yes,Yes,20,Non-binary,White/Caucasian,Junior,Yes
