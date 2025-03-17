@@ -1,0 +1,168 @@
+---
+title: "R Basics Demographics & ANOVA"
+author: "Jessica Macaluso"
+date: "2025-03-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load Packages
+
+```{r, packages}
+library(tidyverse)
+library(psych)
+```
+
+Let's first look at our demographics data.
+
+## Read in Demographics Data
+
+```{r, demographics1}
+demographics <- read.csv("demographics.csv")
+head(demographics)
+```
+
+```{r, demographics2}
+nrow(demographics)
+ncol(demographics)
+```
+
+Fifty rows and ten columns in this data frame. 
+
+## Demographics, One Column at a Time
+
+We will `group_by()` the "Eighteen_or_Older" column and use `summarise()` to get the percent of each answer option. We will do this for all of the various demographics columns.
+
+```{r, eighteen_or_older}
+demographics %>% 
+  group_by(Eighteen_or_Older) %>%
+  summarise(percent = 100 * n() / nrow(demographics))
+```
+
+All fifty participants are eighteen or older.
+
+```{r, fluent_in_English}
+demographics %>% 
+  group_by(Fluent_in_English) %>%
+  summarise(percent = 100 * n() / nrow(demographics))
+```
+
+All fifty participants are fluent in English.
+
+```{r, cogpsych_student}
+demographics %>% 
+  group_by(CogPsych_Student) %>%
+  summarise(percent = 100 * n() / nrow(demographics))
+```
+
+All fifty participants are students in a cognitive psychology course.
+
+```{r, age}
+demographics %>% 
+  group_by(Age) %>%
+  summarise(percent = 100 * n() / nrow(demographics))
+```
+
+34% of participants are 19 years old, 40% of participants are 20 years old, 22% of participants are 21 years old, and 4% of participants are 22 years old.
+
+```{r, gender}
+demographics %>% 
+  group_by(Gender) %>%
+  summarise(percent = 100 * n() / nrow(demographics)) 
+```
+
+62% of participants identify as female, 26% of participants identify as male, 8% of participants identify as non-binary, and 4% of participants identify as transgender.
+
+```{r, race_and_ethnicity}
+demographics %>% 
+  group_by(Race_Ethnicity) %>%
+  summarise(percent = 100 * n() / nrow(demographics)) 
+```
+
+24% of participants identify as Asian, 10% of participants identify as black or African American, 2% of participants identify as Hispanic or Latino, 6% of participants identify as Pacific Islander, and 58% of participants identify as white or Caucasian.
+
+```{r, academic_year}
+demographics %>% 
+  group_by(Academic_Year) %>%
+  summarise(percent = 100 * n() / nrow(demographics))
+```
+
+38% of participants are juniors, 20% of participants are seniors, and 42% of participants are sophomores.
+
+```{r, psychology_major}
+demographics %>% 
+  group_by(Psych_Major) %>%
+  summarise(percent = 100 * n() / nrow(demographics))
+```
+
+22% of participants are not psychology majors and 78% of participants are psychology majors.
+
+
+Now that we have looked at all the demographics data, let's look at final test performance and run our ANOVA. First, let's read in our data.
+
+## Read in Final Test Data
+
+```{r, final_test1}
+final_test <- read.csv("final_test.csv")
+head(final_test)
+```
+
+```{r, final_test2}
+nrow(final_test)
+ncol(final_test)
+```
+
+Fifty rows and thirteen columns in this data frame. All our participants match up by their "ID" and "Initials." Participants are either in "Group One" or "Group Two" and answered ten total test questions.
+
+## Pivot Data to Long Format for Analysis
+
+```{r, pivot1}
+final_test %>% pivot_longer(cols=c(Test1:Test10),
+                            names_to="Question",
+                            values_to="Response") -> final_test_long
+```
+
+Let's check that everything looks right.
+
+```{r, pivot2}
+head(final_test_long)
+```
+
+```{r, pivot3}
+nrow(final_test_long)
+```
+
+Now we have 500 rows, 10 for each participant (50 x 10 = 500).
+
+We can now also see the responses for each of the ten test questions. 1 indicates the correct answer (aka answer option "a"). 2, 3, and 4 are wrong answers (aka answer options "b", "c", and "d"). Let's code that (what is right and what is wrong).
+
+```{r, ifelse1}
+final_test_long %>% mutate(Correct = ifelse(Response == 1, 1, 0)) -> final_test_long
+```
+
+Let's check that everything looks right.
+
+```{r, ifelse2}
+head(final_test_long)
+```
+
+Yep, everything looks great. Let's first take a look at our descriptive statistics (i.e., means and standard deviations) before we run our ANOVA.
+
+```{r, descriptive_stats}
+final_test_long %>% group_by(Group) %>% summarise(accuracy = mean(Correct),
+                                                  SD = sd(Correct))
+```
+
+Group One has a mean accuracy of 0.60 (~60%) and a standard deviation of 0.49. Group 2 has a mean accuracy of 0.70 (~70%) and a standard deviation of 0.46. 
+
+Now let's run our ANOVA.
+
+```{r, anova}
+model <- aov(Correct ~ Group, data = final_test_long)
+summary(model)
+```
+
+We can see that there is a significant difference between our Groups. Group 2 performed significantly better on the final test compared to Group 1 (p = 0.03 *).
